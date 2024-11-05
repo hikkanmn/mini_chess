@@ -14,17 +14,18 @@ const initialBoardSetup = [
 
 let draggedPiece = null;
 let draggedFromSquare = null;
-let currentTurn = 'white';  // Белые начинают игру
+let currentTurn = 'white';  // белые начинают игру
 
-// Определяем, к какой стороне принадлежит фигура
+// определяем, к какой стороне принадлежит фигура
 function isWhitePiece(piece) {
-    return piece.charCodeAt(0) >= 9812 && piece.charCodeAt(0) <= 9817; // Белые фигуры
+    return piece.charCodeAt(0) >= 9812 && piece.charCodeAt(0) <= 9817; // белые фигуры
 }
 
 function isBlackPiece(piece) {
-    return piece.charCodeAt(0) >= 9818 && piece.charCodeAt(0) <= 9823; // Чёрные фигуры
+    return piece.charCodeAt(0) >= 9818 && piece.charCodeAt(0) <= 9823; // черные фигуры
 }
 
+//создаем доску вложенным массивом
 function createChessboard() {
     chessboard.innerHTML = '';
     for (let row = 0; row < 8; row++) {
@@ -42,12 +43,12 @@ function createChessboard() {
                 pieceElement.setAttribute('draggable', true);
                 square.appendChild(pieceElement);
 
-                // Drag event listeners
+                // слушатели перетаскивания
                 pieceElement.addEventListener('dragstart', handleDragStart);
                 pieceElement.addEventListener('dragend', handleDragEnd);
             }
 
-            // Drop event listeners
+            // слушатели "отпускания" фигуры
             square.addEventListener('dragover', handleDragOver);
             square.addEventListener('drop', handleDrop);
             chessboard.appendChild(square);
@@ -58,13 +59,13 @@ function createChessboard() {
 function handleDragStart(event) {
     const piece = event.target.textContent;
     
-    // Проверка хода: если ходят белые, можно двигать только белые фигуры, и наоборот
+    // проверка хода: если ходят белые, можно двигать только белые фигуры, и наоборот
     if ((currentTurn === 'white' && isWhitePiece(piece)) || 
         (currentTurn === 'black' && isBlackPiece(piece))) {
         draggedPiece = event.target;
         draggedFromSquare = draggedPiece.parentElement;
     } else {
-        event.preventDefault();  // Запрещаем перетаскивание неправильной фигуры
+        event.preventDefault();  // запрещаем перетаскивание неправильной фигуры
     }
 }
 
@@ -85,31 +86,31 @@ function handleDrop(event) {
     if (draggedPiece) {
         const targetPiece = targetSquare.firstChild ? targetSquare.firstChild.textContent : null;
         
-        // Если в цели есть фигура и она противоположного цвета, "съедаем" её
+        // если в цели есть фигура и она противоположного цвета, то съедаем её
         if (targetPiece && (
             (isWhitePiece(draggedPiece.textContent) && isBlackPiece(targetPiece)) ||
             (isBlackPiece(draggedPiece.textContent) && isWhitePiece(targetPiece))
         )) {
-            // Отображаем съеденные фигуры
+            // отображаем съеденные фигуры
             if (isWhitePiece(targetPiece)) {
                 capturedWhites.textContent += targetPiece + ' ';
             } else {
                 capturedBlacks.textContent += targetPiece + ' ';
             }
             
-            // Убираем вражескую фигуру
+            // убираем вражескую фигуру
             targetSquare.innerHTML = '';
         }
         
-        // Перемещаем фигуру
+        // перемещаем фигуру
         targetSquare.appendChild(draggedPiece);
         
-        // Очищаем исходную клетку
+        // очищаем исходную клетку
         if (draggedFromSquare) {
             draggedFromSquare.innerHTML = '';
         }
 
-        // Смена хода
+        // смена хода
         currentTurn = (currentTurn === 'white') ? 'black' : 'white';
     }
 }
