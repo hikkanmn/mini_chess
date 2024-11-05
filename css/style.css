@@ -1,81 +1,61 @@
 * {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-body {
-    display: grid;
-    place-items: center;
-    overflow-x: hidden;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 h1 {
-    margin: 10px;
+    font-size:xx-large;
+    text-transform: uppercase;
+    margin-bottom: 50px;
 }
-
-ul {
-    display: grid;
-    grid-template-columns: 1fr;
-}
-
-.divv {
+ 
+body {
+    margin: 0 auto;
+    box-sizing: border-box;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-li {
-    list-style: none;
+#chessboard {
     display: grid;
-    place-items: center;
-    font-size: 0px;
+    grid-template-columns: repeat(8, 60px);
+    grid-template-rows: repeat(8, 60px);
+    border: 2px solid black;
+    margin-right: 20px;
 }
 
-.box {
-    margin: .5px;
-    width: 75px;
-    height: 75px;
+#chessboard div {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
 }
 
-#tog {
-    margin: 10px 0px;
+.black {
+    background-color: #825696;
 }
 
-
-.allimg {
-    width: 45px;
-    position: relative;
-    bottom: 5px;
+.white {
+    background-color: #e7d2ee;
 }
 
-.allpawn {
-    transform: scale(.7);
+.piece {
+    cursor: pointer;
 }
 
-.authcont {
-    width: 100vw;
+.captured-pieces {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size:larger;
 }
 
-.author {
-    float: right;
-    margin-right: 50px;
-
-
-}
-
-
-@media (max-width:650px) {
-
-    #tog {
-        margin-bottom: 70px;
-
-    }
-
-    .box {
-        width: 11vw;
-        height: 11vw;
-    }
-
-    .allimg {
-        width: 7vw;
-    }
+#captured-whites,
+#captured-blacks {
+    margin: 10px 0;
 }
